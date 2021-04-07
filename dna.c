@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "dna.h"
 
@@ -23,32 +24,53 @@ int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE +
         return 0;
     }
 
-    mlcs_w(a, n-1, b, m, length);
-    mlcs_w(a, n, b, m-1, length);
-    mlcs_w(a, n-1, b, m-1, length);
+    //mlcs_w(a, n-1, b, m, length);
+    //mlcs_w(a, n, b, m-1, length);
+    //mlcs_w(a, n-1, b, m-1, length);
+
+    if(length[n][m]!=-1){
+        return length[n][m];
+    }
 
     if(a[n-1] == b[m-1]){
-        length[n][m] = length[n-1][m-1] + 1;
+        
+        return length[n][m] =  1+ mlcs_w(a, n-1, b, m, length);
+        //mlcs_w(a, n-1, b, m-1, length);
     }
     else{
+        
         if(length[n-1][m] > length[n][m-1]){
-            length[n][m] = length[n-1][m];
+            
+            return length[n][m] = mlcs_w(a, n-1, b, m, length);
+            
         }
         else {
-            length[n][m] = length[n][m-1];
+            
+            return length[n][m]= mlcs_w(a, n, b, m+1, length);
+            
         }
+        
+       
+        
+    
     }
-    return 0;
+    return length[n][m];
+    
 }
 
 
 int mlcs(char a[], int n, char b[], int m) {
+    
     int length[MAX_SIZE+1][MAX_SIZE+1];
-
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            length[i][j] = -1;
     mlcs_w(a, n, b, m, length);
 
     return length[n][m];
+    
 }
+
 
 
 int dlcs(char a[], int n, char b[], int m) {
