@@ -29,24 +29,24 @@ int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE +
     //mlcs_w(a, n-1, b, m-1, length);
 
     if(length[n][m]!=-1){
-        return length[n][m];
+        length[n][m];
     }
 
     if(a[n-1] == b[m-1]){
         
-        return length[n][m] =  1+ mlcs_w(a, n-1, b, m, length);
+        length[n][m] =  1+ mlcs_w(a, n-1, b, m-1, length);
         //mlcs_w(a, n-1, b, m-1, length);
     }
     else{
         
         if(length[n-1][m] > length[n][m-1]){
             
-            return length[n][m] = mlcs_w(a, n-1, b, m, length);
+            length[n][m] = mlcs_w(a, n-1, b, m, length);
             
         }
         else {
             
-            return length[n][m]= mlcs_w(a, n, b, m+1, length);
+            length[n][m]= mlcs_w(a, n, b, m+1, length);
             
         }
         
