@@ -18,57 +18,68 @@ void load_string(FILE *file, int *p, char *s, int t) {
 
 
 int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE + 1]) {
-    // Base da recursão
     if (n==0 || m==0){
         length[n][m]=0;
         return 0;
     }
 
+    mlcs_w(a, n-1, b, m, length);
+    mlcs_w(a, n, b, m-1, length);
     mlcs_w(a, n-1, b, m-1, length);
-    // se o n-ésimo caractere do primeiro vetor é igual ao m-ésimo caractere do segundo vetor;
+
     if(a[n-1] == b[m-1]){
-        length[n][m]= length[n-1][m-1] +1;
+        length[n][m] = length[n-1][m-1] + 1;
     }
-    // caso contrário
     else{
         if(length[n-1][m] > length[n][m-1]){
-            length[n][m]= length[n-1][m];
+            length[n][m] = length[n-1][m];
         }
-        else{
-            length[n][m]=length[n][m-1];
+        else {
+            length[n][m] = length[n][m-1];
         }
     }
-
-
-
     return 0;
 }
 
 
 int mlcs(char a[], int n, char b[], int m) {
-    // inicializa matiz
     int length[MAX_SIZE+1][MAX_SIZE+1];
 
-    // Deve chamar a função mlcs_w
     mlcs_w(a, n, b, m, length);
 
-    // O QUE QUE TEM QUE RETORNAR?? 
-    // PREENCHE UMA MATRIZ MAS RETORNA SÓ UM NUMERO???
-    // BOTEI PARA RETORNAR O MAXIMO DA MATRIZ NESSE CÓDIGO ABAIXO
-    // MAS SÓ DEVOLVE "2"
-    int r=0;
-    for (int i=0; i<n; i++){
-        for(int e=0; e<m; e++){
-            if (length[i][e] >r){
-                r = length[i][e];
-            }
-
-        }
-    }
-    return r;
+    return length[n][m];
 }
 
 
 int dlcs(char a[], int n, char b[], int m) {
+    // int length[n+1][m+1];
+
+    // // se o n-ésimo caractere do primeiro vetor é igual ao m-ésimo caractere do segundo vetor;
+
+    // for(int r = 0; r < n; r++){
+    //     length[r][0] = 0;
+    // }
+    // for(int c = 0; c < m; c++){
+    //     length[0][c] = 0;
+    // }
+
+    // for (int row = 1; row <= n; row++){
+    //     for (int col = 1; col <= m; col++){
+
+    //         if(a[row-1] == b[col-1]){
+    //             length[row][col] = length[row-1][col-1] +1;
+    //         }
+    //         else{
+    //             if(length[row-1][col] >= length[row][col-1]){
+    //                 length[row][col] = length[row-1][col];
+    //             }
+    //             else{
+    //                 length[row][col] = length[row][col-1];
+    //             }
+    //         }
+    //     }
+
+    //     }
+
     return 2;
 }
